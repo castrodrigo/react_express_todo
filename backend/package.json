@@ -1,0 +1,33 @@
+{
+  "name": "react_express_todo_backend",
+  "version": "0.0.1",
+  "description": "Node Express App running as API",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=dev babel-node app.js",
+    "test": "mocha --require babel-core/register --timeout 4000"
+  },
+  "author": "Rodrigo de Castro",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.1",
+    "config": "^1.20.1",
+    "cors": "^2.8.3",
+    "express": "^4.15.2",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^4.9.1",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
+  }
+}

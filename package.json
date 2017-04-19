@@ -1,0 +1,28 @@
+{
+  "name": "react_express_todo",
+  "version": "0.0.1",
+  "description": "Simple application to integrate React, Redux, Express and JWT Auth",
+  "main": "app.js",
+  "scripts": {
+    "install": "cd backend && npm install && cd ../frontend && npm install",
+    "backend": "node server/index",
+    "frontend": "node ./public/node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/castrodrigo/react_express_todo.git"
+  },
+  "keywords": [
+    "React",
+    "Redux",
+    "Node",
+    "Express",
+    "JWT"
+  ],
+  "author": "Rodrigo de Castro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/castrodrigo/react_express_todo/issues"
+  },
+  "homepage": "https://github.com/castrodrigo/react_express_todo#readme"
+}

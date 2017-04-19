@@ -1,0 +1,5 @@
+{
+    "DBHost": "mongodb://localhost:expressreaction-test/expressreaction-test",
+    "Port": 8082,
+    "secret": "871C0DB6FB4E35E3BC12D69173669123C1872DF3"
+}
