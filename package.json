@@ -5,8 +5,6 @@
   "main": "app.js",
   "scripts": {
     "install": "cd backend && npm install && cd ../frontend && npm install",
-    "backend": "node server/index",
-    "frontend": "node ./public/node_modules/webpack-dev-server/bin/webpack-dev-server.js"
   },
   "repository": {
     "type": "git",
