@@ -4,7 +4,7 @@
   "description": "Simple application to integrate React, Redux, Express and JWT Auth",
   "main": "app.js",
   "scripts": {
-    "install": "cd backend && npm install && cd ../frontend && npm install",
+    "install": "cd backend && npm install && cd ../frontend && npm install"
   },
   "repository": {
     "type": "git",
