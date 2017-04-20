@@ -17,7 +17,9 @@ function getTodosByUser(req, res) {
 		if(err){
       return res.status(404).send({ error: 'No Data related' });
     }
-		res.json(todos);
+		res.send({
+	    todos: todos
+	   });
 	});
 }
 

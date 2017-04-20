@@ -5,11 +5,14 @@ import { Link } from 'react-router';
 class Header extends Component {
   renderLinks() {
     if (this.props.authenticated) {
-      return (
-        <li>
+      return [
+        <li key={1}>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>,
+        <li key={2}>
           <Link to="/signout">Sign out</Link>
         </li>
-      );
+      ];
     } else {
       return [
         <li key={1}>
@@ -25,7 +28,7 @@ class Header extends Component {
     return (
       <nav>
         <div className="nav-wrapper">
-          <Link to="/" className="brand-logo">Todo List</Link>
+          <Link to="/" className="brand-logo">ToDo List</Link>
           <ul className="right">
             {this.renderLinks()}
           </ul>

@@ -41,9 +41,9 @@ function signup(req, res, next) {
         return next(err)
       };
       res.send({
-        token: tokenForUser(req.user),
-        user_id: req.user.id,
-        user_email: req.user.email
+        token: tokenForUser(user),
+        user_id: user.id,
+        user_email: user.email
        });
     });
   });

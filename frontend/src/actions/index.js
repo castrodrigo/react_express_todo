@@ -2,9 +2,12 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import {
   AUTH_USER,
-  AUTH_ERROR,
+  SIGNIN_ERROR,
+  SIGNUP_ERROR,
   UNAUTH_USER,
-  FETCH_MESSAGE
+  FETCH_MESSAGE,
+  SAVE_TODO,
+  SAVE_ERROR
 } from './types';
 
 const ROOT_URL = 'http://localhost:8081';
@@ -17,10 +20,10 @@ export function signinUser({ email, password }) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user_id', response.data.user_id);
         localStorage.setItem('user_email', response.data.user_email);
-        browserHistory.push('/feature');
+        browserHistory.push('/dashboard');
       })
       .catch((err) => {
-        dispatch(authError('Incorrect data'));
+        dispatch(signinError('Incorrect data'));
       });
   }
 }
@@ -33,63 +36,84 @@ export function signupUser({ email, password }) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user_id', response.data.user_id);
         localStorage.setItem('user_email', response.data.user_email);
-        browserHistory.push('/feature');
+        browserHistory.push('/dashboard');
       })
       .catch(error => {
         console.log('error', error.response.data.error);
-        dispatch(authError(error.response.data.error));
+        dispatch(signupError(error.response.data.error));
       });
   }
 }
 
-export function authError(error) {
+export function signinError(error) {
   return {
-    type: AUTH_ERROR,
+    type: SIGNIN_ERROR,
     payload: error
   }
 }
+export function signupError(error) {
+  return {
+    type: SIGNUP_ERROR,
+    payload: error
+  }
+}
+export function saveError(error) {
+  return {
+    type: SAVE_ERROR,
+    payload: error
+  }
+}
+
 export function signoutUser() {
   localStorage.removeItem('token');
+  browserHistory.push('/');
   return {
     type: UNAUTH_USER
   }
 }
 
-export function getTodosByUser({ user_id }) {
+export function getTodosByUser() {
   return function(dispatch) {
-    axios.get(`${ROOT_URL}/todo/user/${user_id}`)
+    axios.get(`${ROOT_URL}/todo/user/${localStorage.getItem('user_id')}`)
       .then(response => {
-        //TODO
+        localStorage.setItem('todos', response.data.todos);
       })
       .catch(error => {
         console.log('error', error.response.data.error);
-        dispatch(authError(error.response.data.error));
       });
   }
 }
 
-export function postTodo({ title, description, user_id }) {
+export function postTodo({ title, description}) {
   return function(dispatch) {
-    axios.post(`${ROOT_URL}/todo`, { title, description, user_id })
+    axios.post(`${ROOT_URL}/todo`, {
+      "title": title,
+      "description": description,
+      "user": localStorage.getItem('user_id')
+      })
       .then(response => {
-        //TODO
+        browserHistory.push('/dashboard');
+        dispatch({ type: SAVE_SUCCESS, payload: "Data saved with sucess!"});
       })
       .catch(error => {
         console.log('error', error.response.data.error);
-        dispatch(authError(error.response.data.error));
+        dispatch(saveError(error.response.data.error));
       });
   }
 }
 
-export function updateTodo({ title, description, status, user_id }) {
+export function updateTodo({ title, description }) {
   return function(dispatch) {
-    axios.put(`${ROOT_URL}/todo`, { title, description, status, user_id })
+    axios.put(`${ROOT_URL}/todo`, {
+      "title": title,
+      "description": description,
+      "user_id": localStorage.getItem('user_id')
+      })
       .then(response => {
         //TODO
       })
       .catch(error => {
         console.log('error', error.response.data.error);
-        dispatch(authError(error.response.data.error));
       });
   }
 }
@@ -107,7 +131,7 @@ export function fetchMessage() {
         });
       })
       .catch((err) => {
-        dispatch(authError('Incorrect data'));
+        dispatch(signinError('Incorrect data'));
       });
   }
 }

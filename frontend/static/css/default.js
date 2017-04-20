@@ -17,7 +17,10 @@ export default StyleSheet.create({
         "paddingRight": 20,
         "paddingBottom": 20,
         "paddingLeft": 20,
-        "marginBottom": 20
+        "marginTop": 10,
+        "marginRight": 0,
+        "marginBottom": 20,
+        "marginLeft": 0
     },
     "alert-danger": {
         "backgroundColor": "#FF5F49"

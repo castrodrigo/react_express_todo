@@ -4,17 +4,23 @@ import { Field, reduxForm } from 'redux-form';
 import * as actions from '../../actions';
 
 class Signin extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {submit: false};
+  }
   handleFormSubmit({ email, password }) {
+    this.setState({submit: true});
     console.log(email, password);
     this.props.signinUser({ email, password });
   }
   renderAlert() {
-    if (this.props.errorMessage) {
+    if (this.state.submit && this.props.loginErrorMessage) {
       return (
         <div className="alert alert-danger">
-          <strong>Error!</strong> {this.props.errorMessage}
+          <strong>Error!</strong> {this.props.loginErrorMessage}
         </div>
       );
+      this.setState({submit: false});
     }
   }
   render() {
@@ -46,7 +52,7 @@ Signin = reduxForm({
 })(Signin);
 
 function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
+  return { loginErrorMessage: state.auth.signin_error };
 }
 
 export default connect(mapStateToProps, actions)(Signin);

@@ -7,23 +7,29 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
   return (
       <div>
         <label>{label}</label>
-        <input {...input} placeholder={label} type={type} className="form-control" />
+        <input {...input} type={type} className="form-control" />
         {touched && ((error && <span className="error">{error}</span>) || (warning && <span>{warning}</span>))}
       </div>
   );
 };
 
 class Signup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {submit: false};
+  }
   handleFormSubmit({ email, password }) {
+    this.setState({submit: true});
     this.props.signupUser({ email, password });
   }
   renderAlert() {
-    if (this.props.errorMessage) {
+    if (this.props.registerErrorMessage && this.state.submit) {
       return (
         <div className="alert alert-danger">
-          <strong>Oops!</strong> {this.props.errorMessage}
+          <strong>Error!</strong> {this.props.registerErrorMessage}
         </div>
       );
+      this.setState({submit: false});
     }
   }
   render() {
@@ -38,8 +44,8 @@ class Signup extends Component {
                 <Field name="email" label="Email" component={renderField} type="email" />
                 <Field name="password" label="Password" component={renderField} type="password" />
                 <Field name="passwordConfirm" label="Confirm Password" component={renderField} type="password" />
-                <button action="submit" className="btn btn-primary">Sign up</button>
                 {this.renderAlert()}
+                <button action="submit" className="btn btn-primary">Sign up</button>
               </div>
             </div>
           </form>
@@ -52,12 +58,12 @@ class Signup extends Component {
 function validate(formProps) {
   const errors = {};
 
-  if (formProps.password !== formProps.passwordConfirm) {
-    errors.password = 'Passwords must match';
+  if (!formProps.email) {
+    errors.email = 'Please enter an valid email';
   }
 
-  if (!formProps.email) {
-    errors.email = 'Please enter an email';
+  if (formProps.password !== formProps.passwordConfirm) {
+    errors.password = 'Passwords must match';
   }
 
   if (!formProps.password) {
@@ -78,7 +84,7 @@ Signup = reduxForm({
 })(Signup);
 
 function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
+  return { registerErrorMessage: state.auth.signup_error };
 }
 
 export default connect(mapStateToProps, actions)(Signup);
